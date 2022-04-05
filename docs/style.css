@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
 :root {
-    --green-300: #86EFAC;
-    --sky-700: #0369A1;
+    --green-300: #86efac;
+    --sky-700: #0369a1;
     font-family: "Roboto", sans-serif;
     font-size: 20px;
 }
@@ -32,15 +32,15 @@ li {
     list-style-type: none;
     display: flex;
     align-items: center;
-    
+
     gap: 10px;
 
     font-size: 1.5em;
     font-weight: bold;
 }
 
-.delete-button-task, .delete-button-project {
-    
+.delete-button-task,
+.delete-button-project {
     width: 30px;
     height: 30px;
     text-align: center;
@@ -49,13 +49,12 @@ li {
 
     display: grid;
     align-content: center;
-
 }
 
-.delete-button-task:hover, .delete-button-project:hover {
-    
+.delete-button-task:hover,
+.delete-button-project:hover {
     background: gray;
-    border: none;  
+    border: none;
 }
 
 .selected {

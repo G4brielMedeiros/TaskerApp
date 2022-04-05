@@ -88,7 +88,6 @@ function deleteProject(id) {
 function renderProjects() {
     clearChildren(projectListHTML);
     projects.forEach((project) => renderProject(project));
-
 }
 
 function renderProject(project) {
@@ -143,13 +142,12 @@ function addTask(projectId, title) {
 }
 
 function renderTasks() {
-    
     projectListHTML.childNodes.forEach((element) => {
-      element.classList.remove('selected');
-    })
+        element.classList.remove("selected");
+    });
 
-    document.getElementById(selectedProject).classList.add('selected')
-    
+    document.getElementById(selectedProject).classList.add("selected");
+
     clearChildren(taskListHTML);
 
     const project = projects.find((project) => project.id == selectedProject);
@@ -198,15 +196,12 @@ newTaskFormHTML.addEventListener("submit", () => {
 });
 
 clearDoneButtonHTML.addEventListener("click", () => {
+    const project = projects.find((project) => project.id == selectedProject);
 
-  const project = projects.find((project) => project.id == selectedProject);
-  
-    project.tasks = project.tasks.filter((task) => task.checked == false)
+    project.tasks = project.tasks.filter((task) => task.checked == false);
 
-  renderTasks();
-})
-
+    renderTasks();
+});
 
 renderProjects();
 renderTasks();
-
