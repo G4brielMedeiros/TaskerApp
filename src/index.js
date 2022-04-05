@@ -70,8 +70,12 @@ let selectedProject = projects.at(0).id;
 function addProject(title) {
     if (title.trim() == "") return;
 
+    const id = Date.now().toString();
+
+    selectedProject = id;
+
     projects.push({
-        id: Date.now().toString(),
+        id,
         title,
         tasks: [],
     });
@@ -142,6 +146,8 @@ function addTask(projectId, title) {
         checked: false,
     });
 }
+
+
 
 function renderTasks() {
     clearChildren(taskListHTML);
