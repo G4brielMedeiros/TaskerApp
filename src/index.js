@@ -6,8 +6,8 @@ const newProjectInputHTML = qs(".new-project > input");
 const newTaskInputHTML = qs(".new-task > input");
 const projectListHTML = qs(".project-section > ul");
 const taskListHTML = qs(".task-section > ul");
+const clearDoneButtonHTML = qs(".task-section > button");
 
-let selectedProject = -1;
 
 let projects = [
     {
@@ -64,29 +64,24 @@ let projects = [
     },
 ];
 
-function nextProjectId() {
-    return projects.length;
-}
+let selectedProject = projects.at(0).id;
+
 
 function addProject(title) {
     if (title.trim() == "") return;
 
     projects.push({
-        id: nextProjectId(),
+        id: Date.now().toString(),
         title,
         tasks: [],
     });
+
+    console.log(projects);
 }
 
 function deleteProject(id) {
     projects = projects.filter((project) => project.id != id);
 }
-
-newProjectFormHTML.addEventListener("submit", () => {
-    addProject(newProjectInputHTML.value);
-    newProjectInputHTML.value = "";
-    renderProjects();
-});
 
 function renderProjects() {
     clearChildren(projectListHTML);
@@ -111,10 +106,13 @@ function renderProject(project) {
     });
 
     deleteButton.addEventListener("click", () => {
+
         deleteProject(project.id);
-        if (selectedProject == project.id) {
-            selectedProject = -1;
-        }
+        
+
+        if (selectedProject == project.id && projects.length > 0)
+            selectedProject = projects.at(0).id;
+        
 
         renderProjects();
         console.log(selectedProject);
@@ -132,14 +130,25 @@ function renderProject(project) {
     projectListHTML.appendChild(projectElement);
 }
 
+function addTask(projectId, title) {
+
+    if (title.trim() == "") return;
+
+    const project = projects.find((project) => project.id == projectId);
+
+    project.tasks.push({
+        id: Date.now().toString(),
+        title: title,
+        checked: false,
+    });
+}
+
 function renderTasks() {
     clearChildren(taskListHTML);
 
-    if (selectedProject == -1) return;
-
     const project = projects.find((project) => project.id == selectedProject);
 
-    project.tasks.forEach((task) => renderTask(task));
+    if (project) project.tasks.forEach((task) => renderTask(task));
 }
 
 function renderTask(task) {
@@ -160,17 +169,27 @@ function renderTask(task) {
         for: "check" + task.id,
     });
 
-    checkbox.addEventListener("click", () => {
-      task.checked = checkbox.checked;
-    })
+    checkbox.addEventListener("click", () => task.checked = checkbox.checked);
 
     checkbox.checked = task.checked;
     taskElement.appendChild(checkbox);
     taskElement.appendChild(taskTitle);
-
     taskListHTML.appendChild(taskElement);
 }
 
-renderProjects();
+newProjectFormHTML.addEventListener("submit", () => {
+    addProject(newProjectInputHTML.value);
+    newProjectInputHTML.value = null;
+    renderProjects();
+    renderTasks();
+});
 
+newTaskFormHTML.addEventListener("submit", () => {
+    console.log(selectedProject);
+    addTask(selectedProject, newTaskInputHTML.value);
+    newTaskInputHTML.value = null;
+    renderTasks();
+});
+
+renderProjects();
 renderTasks();
