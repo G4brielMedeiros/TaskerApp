@@ -1,0 +1,26 @@
+:root {
+    --green-300: #86EFAC;
+}
+
+body {
+    background-color: var(--green-300);
+}
+
+header {
+    text-align: center;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 50px;
+    margin-top: 100px;
+}
+
+li {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
