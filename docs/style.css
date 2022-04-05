@@ -3,6 +3,7 @@
 :root {
     --green-300: #86efac;
     --sky-700: #0369a1;
+    --bg-li: #4ade80;
     font-family: "Roboto", sans-serif;
     font-size: 20px;
 }
@@ -25,6 +26,7 @@ main {
     justify-content: center;
     align-items: baseline;
     gap: 50px;
+    flex-wrap: wrap;
     margin-top: 100px;
 }
 
@@ -39,10 +41,26 @@ li {
     font-weight: bold;
 }
 
-.delete-button-task,
+ul {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.project {
+    background-color: var(--bg-li);
+}
+
+.project-title {
+    width: 100%;
+}
+
+.task {
+    background-color: var(--bg-li);
+}
+
 .delete-button-project {
-    width: 30px;
-    height: 30px;
     text-align: center;
 
     font-size: 1em;
@@ -51,12 +69,19 @@ li {
     align-content: center;
 }
 
-.delete-button-task:hover,
-.delete-button-project:hover {
-    background: gray;
-    border: none;
-}
-
 .selected {
     color: var(--sky-700);
+}
+
+.clear-button {
+    margin-top: 20px;
+    width: 100%;
+    height: 30px;
+}
+
+input[type="checkbox"],
+.delete-button-project {
+    height: 25px;
+    width: 25px;
+    margin-left: 5px;
 }
