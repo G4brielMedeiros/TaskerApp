@@ -8,7 +8,6 @@ const projectListHTML = qs(".project-section > ul");
 const taskListHTML = qs(".task-section > ul");
 const clearDoneButtonHTML = qs(".task-section > button");
 
-
 let projects = [
     {
         id: 0,
@@ -66,7 +65,6 @@ let projects = [
 
 let selectedProject = projects.at(0).id;
 
-
 function addProject(title) {
     if (title.trim() == "") return;
 
@@ -80,7 +78,7 @@ function addProject(title) {
         tasks: [],
     });
 
-    console.log(projects);
+    //console.log(projects);
 }
 
 function deleteProject(id) {
@@ -90,6 +88,7 @@ function deleteProject(id) {
 function renderProjects() {
     clearChildren(projectListHTML);
     projects.forEach((project) => renderProject(project));
+
 }
 
 function renderProject(project) {
@@ -110,16 +109,13 @@ function renderProject(project) {
     });
 
     deleteButton.addEventListener("click", () => {
-
         deleteProject(project.id);
-        
 
         if (selectedProject == project.id && projects.length > 0)
             selectedProject = projects.at(0).id;
-        
 
         renderProjects();
-        console.log(selectedProject);
+        //console.log(selectedProject);
         renderTasks();
     });
 
@@ -135,7 +131,6 @@ function renderProject(project) {
 }
 
 function addTask(projectId, title) {
-
     if (title.trim() == "") return;
 
     const project = projects.find((project) => project.id == projectId);
@@ -147,9 +142,14 @@ function addTask(projectId, title) {
     });
 }
 
-
-
 function renderTasks() {
+    
+    projectListHTML.childNodes.forEach((element) => {
+      element.classList.remove('selected');
+    })
+
+    document.getElementById(selectedProject).classList.add('selected')
+    
     clearChildren(taskListHTML);
 
     const project = projects.find((project) => project.id == selectedProject);
@@ -175,7 +175,7 @@ function renderTask(task) {
         for: "check" + task.id,
     });
 
-    checkbox.addEventListener("click", () => task.checked = checkbox.checked);
+    checkbox.addEventListener("click", () => (task.checked = checkbox.checked));
 
     checkbox.checked = task.checked;
     taskElement.appendChild(checkbox);
@@ -191,11 +191,22 @@ newProjectFormHTML.addEventListener("submit", () => {
 });
 
 newTaskFormHTML.addEventListener("submit", () => {
-    console.log(selectedProject);
+    //console.log(selectedProject);
     addTask(selectedProject, newTaskInputHTML.value);
     newTaskInputHTML.value = null;
     renderTasks();
 });
 
+clearDoneButtonHTML.addEventListener("click", () => {
+
+  const project = projects.find((project) => project.id == selectedProject);
+  
+    project.tasks = project.tasks.filter((task) => task.checked == false)
+
+  renderTasks();
+})
+
+
 renderProjects();
 renderTasks();
+
